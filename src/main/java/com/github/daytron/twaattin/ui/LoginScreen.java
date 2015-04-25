@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.daytron.twaattin;
+package com.github.daytron.twaattin.ui;
 
+import com.github.daytron.twaattin.presenter.LoginBehaviour;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.PasswordField;
@@ -53,6 +54,9 @@ public class LoginScreen extends FormLayout {
         addComponent(this.loginField);
         addComponent(this.passwordField);
         addComponent(this.submitButton);
+        
+        submitButton.addClickListener(
+                new LoginBehaviour(loginField, passwordField));
     }
     
     

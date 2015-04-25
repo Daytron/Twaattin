@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.daytron.twaattin;
+package com.github.daytron.twaattin.ui;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -43,17 +43,9 @@ public class TwaattinUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        HorizontalSplitPanel panel = new HorizontalSplitPanel();
+        setContent(new LoginScreen());
         
-        panel.setFirstComponent(new LoginScreen());
         
-        TimelineScreen aTimelineScreen = new TimelineScreen();
-        panel.setSecondComponent(aTimelineScreen);
-        aTimelineScreen.fillTweets();
-        
-        panel.setSplitPosition(300,Unit.PIXELS);
-        
-        setContent(panel);
 
     }
 

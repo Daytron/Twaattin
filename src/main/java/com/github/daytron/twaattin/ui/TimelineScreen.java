@@ -21,10 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.github.daytron.twaattin;
+package com.github.daytron.twaattin.ui;
 
+import com.github.daytron.twaattin.presenter.LogoutBehaviour;
+import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import java.security.Principal;
 
 /**
  *
@@ -34,6 +39,15 @@ public class TimelineScreen extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
     public TimelineScreen() {
+        
+        Label label = new Label(VaadinSession.getCurrent().getAttribute(Principal.class).getName());
+        
+        Button logoutButton = new Button("Logout");
+        logoutButton.addClickListener(new LogoutBehaviour());
+        
+        HorizontalLayout menuBar = new HorizontalLayout(label, logoutButton);
+        
+        addComponent(menuBar);
         setMargin(true);
     }
     
