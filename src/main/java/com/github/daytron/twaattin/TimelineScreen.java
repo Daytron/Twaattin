@@ -30,13 +30,11 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author Ryan Gilera
  */
-public final class TimelineScreen extends VerticalLayout {
+public class TimelineScreen extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
     public TimelineScreen() {
         setMargin(true);
-
-        fillTweets();
     }
     
     public void fillTweets() {
