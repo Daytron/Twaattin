@@ -24,6 +24,7 @@
 package com.github.daytron.twaattin.presenter;
 
 import com.github.daytron.twaattin.ui.LoginScreen;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
@@ -44,7 +45,10 @@ public class LogoutBehaviour implements Button.ClickListener {
         VaadinSession.getCurrent().setAttribute(Principal.class, null);
         
         UI.getCurrent().setContent(new LoginScreen());
-        Notification.show("You've been logout");
+        
+        Notification  logoutNotification = new Notification(
+                "You've been logout", Notification.Type.TRAY_NOTIFICATION);
+        logoutNotification.show(Page.getCurrent());
     }
     
 }

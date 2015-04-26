@@ -26,7 +26,7 @@ package com.github.daytron.twaattin.presenter;
 import com.github.daytron.twaattin.authentication.AuthenticationException;
 import com.github.daytron.twaattin.authentication.SimpleUserPasswordAuthenticationStrategy;
 import com.github.daytron.twaattin.ui.TimelineScreen;
-import com.vaadin.server.ErrorMessage;
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
@@ -66,11 +66,15 @@ public class LoginBehaviour implements Button.ClickListener {
             UI.getCurrent().setContent(aTimelineScreen);
             aTimelineScreen.fillTweets();
             
-            Notification.show("You're now authenticated to Twaattin!");
+            Notification authenticatedNotification = new Notification("You're now authenticated to Twaattin!", Notification.Type.TRAY_NOTIFICATION);
+            authenticatedNotification.show(Page.getCurrent());
             
             
         } catch (AuthenticationException e) {
-            Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
+            Notification errorNotification = new Notification(e.getMessage(),
+                    "Cick this box to close.",
+                    Notification.Type.ERROR_MESSAGE);
+            errorNotification.show(Page.getCurrent());
         }
     }
     
