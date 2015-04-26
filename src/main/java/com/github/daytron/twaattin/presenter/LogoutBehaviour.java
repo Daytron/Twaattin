@@ -26,6 +26,7 @@ package com.github.daytron.twaattin.presenter;
 import com.github.daytron.twaattin.ui.LoginScreen;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -48,6 +49,7 @@ public class LogoutBehaviour implements Button.ClickListener {
         
         Notification  logoutNotification = new Notification(
                 "You've been logout", Notification.Type.TRAY_NOTIFICATION);
+        logoutNotification.setPosition(Position.TOP_CENTER);
         logoutNotification.show(Page.getCurrent());
     }
     

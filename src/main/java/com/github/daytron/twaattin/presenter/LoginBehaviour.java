@@ -28,6 +28,7 @@ import com.github.daytron.twaattin.authentication.SimpleUserPasswordAuthenticati
 import com.github.daytron.twaattin.ui.TimelineScreen;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -67,6 +68,7 @@ public class LoginBehaviour implements Button.ClickListener {
             aTimelineScreen.fillTweets();
             
             Notification authenticatedNotification = new Notification("You're now authenticated to Twaattin!", Notification.Type.TRAY_NOTIFICATION);
+            authenticatedNotification.setPosition(Position.TOP_CENTER);
             authenticatedNotification.show(Page.getCurrent());
             
             
