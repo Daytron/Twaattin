@@ -30,7 +30,6 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.UI;
 
 /**
@@ -39,12 +38,12 @@ import com.vaadin.ui.UI;
 @Theme("mytheme")
 @Widgetset("com.github.daytron.twaattin.MyAppWidgetset")
 public class TwaattinUI extends UI {
+
     private static final long serialVersionUID = 1L;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         setContent(new LoginScreen());
-        
         
 
     }
@@ -53,4 +52,5 @@ public class TwaattinUI extends UI {
     @VaadinServletConfiguration(ui = TwaattinUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
     }
+
 }
