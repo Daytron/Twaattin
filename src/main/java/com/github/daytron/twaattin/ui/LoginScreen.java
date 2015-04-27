@@ -24,40 +24,58 @@
 package com.github.daytron.twaattin.ui;
 
 import com.github.daytron.twaattin.presenter.LoginBehaviour;
+import com.github.daytron.twaattin.service.TwitterService;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.management.RuntimeErrorException;
+import twitter4j.TwitterException;
 
 /**
  *
  * @author Ryan Gilera
  */
 public class LoginScreen extends FormLayout {
+
     private static final long serialVersionUID = 1L;
-    
-    private final TextField loginField;
-    private final PasswordField passwordField;
+
+    private Link twitterLink;
+    private final TextField pinField;
     private final Button submitButton;
 
     public LoginScreen() {
-        this.loginField = new TextField("Login");
-        this.loginField.setInputPrompt("Enter user ID");
-        
-        this.passwordField = new PasswordField("Password");
-        this.passwordField.setInputPrompt("Enter password");
-        
+
+        this.twitterLink = new Link();
+        this.pinField = new TextField();
+
         this.submitButton = new Button("Submit");
-        
+
         setMargin(true);
-        
-        addComponent(this.loginField);
-        addComponent(this.passwordField);
-        addComponent(this.submitButton);
-        
-        submitButton.addClickListener(
-                new LoginBehaviour(loginField, passwordField));
+        setSpacing(true);
+        try {
+            twitterLink.setCaption("Get PIN");
+            twitterLink.setTargetName("twitterauth");
+            twitterLink.setResource(new ExternalResource(
+                    TwitterService.get().getAuthenticationUrl()));
+
+            pinField.setInputPrompt("PIN");
+
+            addComponent(twitterLink);
+            addComponent(pinField);
+            addComponent(submitButton);
+
+            submitButton.addClickListener(
+                    new LoginBehaviour(pinField));
+        } catch (TwitterException ex) {
+            Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
+            throw new InstantiationError();
+
+        }
     }
-    
-    
+
 }

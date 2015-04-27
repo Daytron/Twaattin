@@ -24,14 +24,13 @@
 package com.github.daytron.twaattin.presenter;
 
 import com.github.daytron.twaattin.authentication.AuthenticationException;
-import com.github.daytron.twaattin.authentication.SimpleUserPasswordAuthenticationStrategy;
+import com.github.daytron.twaattin.authentication.TwitterAuthenticationStrategy;
 import com.github.daytron.twaattin.ui.TimelineScreen;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.Position;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import java.security.Principal;
@@ -44,28 +43,24 @@ public class LoginBehaviour implements Button.ClickListener {
     private final static long serialVersionUID = 1L;
     
     private final TextField loginField;
-    private final PasswordField passwordField;
 
-    public LoginBehaviour(TextField loginField, PasswordField passwordField) {
-        this.loginField = loginField;
-        this.passwordField = passwordField;
+    public LoginBehaviour(TextField pinField) {
+        this.loginField = pinField;
     }
     
     @Override
     public void buttonClick(Button.ClickEvent event) {
         try {
-            String login = loginField.getValue();
-            String password = passwordField.getValue();
+            String pin = loginField.getValue();
             
-            Principal user = new SimpleUserPasswordAuthenticationStrategy()
-                    .authenticate(login, password);
+            Principal user = new TwitterAuthenticationStrategy()
+                    .authenticate(pin);
             
             
             VaadinSession.getCurrent().setAttribute(Principal.class, user);
             
             TimelineScreen aTimelineScreen = new TimelineScreen();
             UI.getCurrent().setContent(aTimelineScreen);
-            aTimelineScreen.fillTweets();
             
             Notification authenticatedNotification = new Notification("You're now authenticated to Twaattin!", Notification.Type.TRAY_NOTIFICATION);
             authenticatedNotification.setPosition(Position.TOP_CENTER);
