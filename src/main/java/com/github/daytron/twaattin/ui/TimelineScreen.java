@@ -24,10 +24,18 @@
 package com.github.daytron.twaattin.ui;
 
 import com.github.daytron.twaattin.presenter.LogoutBehaviour;
+import com.github.daytron.twaattin.presenter.TweetRefresherBehaviour;
+import com.github.daytron.twaattin.ui.tabledecorator.NameColumnGenerator;
+import com.github.daytron.twaattin.ui.tabledecorator.ProfileImageColumnGenerator;
+import com.github.daytron.twaattin.ui.tabledecorator.ScreenNameColumnGenerator;
+import com.github.daytron.twaattin.ui.tabledecorator.SourceColumnDecorator;
+import com.github.daytron.twaattin.ui.tabledecorator.TweetColumnDecorator;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import java.security.Principal;
 
@@ -39,6 +47,7 @@ public class TimelineScreen extends VerticalLayout {
     private static final long serialVersionUID = 1L;
 
     public TimelineScreen() {
+        setMargin(true);
         
         Label label = new Label(VaadinSession.getCurrent().getAttribute(Principal.class).getName());
         
@@ -46,24 +55,32 @@ public class TimelineScreen extends VerticalLayout {
         logoutButton.addClickListener(new LogoutBehaviour());
         
         HorizontalLayout menuBar = new HorizontalLayout(label, logoutButton);
-        
+        menuBar.setWidth(100, Unit.PERCENTAGE);
+        menuBar.setComponentAlignment(logoutButton, Alignment.MIDDLE_RIGHT);
         addComponent(menuBar);
-        setMargin(true);
+        
+        addComponentAttachListener(new TweetRefresherBehaviour());
+        
+        Table table = new Table();
+        addComponent(table);
+        
+        table.addGeneratedColumn("source", new SourceColumnDecorator());
+        table.addGeneratedColumn("screenName", new ScreenNameColumnGenerator());
+        table.addGeneratedColumn("name", new NameColumnGenerator());
+        table.addGeneratedColumn("profileImage", new ProfileImageColumnGenerator());
+        table.addGeneratedColumn("text", new TweetColumnDecorator());
+        
+        table.setColumnHeader("source", "via");
+        table.setColumnHeader("screenName", "Screen name");
+        table.setColumnHeader("profileImage","");
+        table.setColumnHeader("text","Tweet");
+        
+        table.setVisibleColumns(new Object[]{"text","name","screenName",
+            "profileImage","createdAt","source"});
+        
+        
     }
     
-    public void fillTweets() {
-        for(int i=0; i<10; i++) {
-            Label label = new Label();
-            
-            // Placeholder for now
-            label.setValue("Lorem ipsum dolor sit amet, consectetur "
-                    + "adipiscing elit. Suspendisse efficitur massa a"
-                    + " ex ultrices luctus. Ut laoreet lectus sem, "
-                    + "vitae interdum justo vestibulum nec");
-            
-            addComponent(label);
-        }
-    }
     
     
 }
