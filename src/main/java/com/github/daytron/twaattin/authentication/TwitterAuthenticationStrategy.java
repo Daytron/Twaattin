@@ -23,20 +23,28 @@
  */
 package com.github.daytron.twaattin.authentication;
 
+import com.github.daytron.twaattin.service.TwitterService;
 import java.security.Principal;
+import twitter4j.TwitterException;
 
 /**
  *
  * @author Ryan Gilera
  */
-public interface UserPasswordAuthenticationStrategy {
+public class TwitterAuthenticationStrategy implements PinAuthenticationStrategy {
 
-    /**
-     * Authenticate using the login / password pair.
-     *
-     * @param login Login
-     * @param password Password
-     * @return Security principal identifying this user
-     */
-    Principal authenticate(String pin) throws AuthenticationException;
+    @Override
+    public Principal authenticate(String pin) throws AuthenticationException {
+        try {
+
+            String screenName = TwitterService.get().authenticate(pin);
+
+            return new User(screenName);
+
+        } catch (TwitterException e) {
+
+            throw new AuthenticationException(e);
+        }
+    }
+
 }

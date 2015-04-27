@@ -29,14 +29,14 @@ import java.security.Principal;
  *
  * @author Ryan Gilera
  */
-public interface UserPasswordAuthenticationStrategy {
+public interface PinAuthenticationStrategy {
 
     /**
-     * Authenticate using the login / password pair.
+     * Authenticate using the PIN.
      *
-     * @param login Login
-     * @param password Password
+     * @param pin PIN
      * @return Security principal identifying this user
+     * @throws com.github.daytron.twaattin.authentication.AuthenticationException
      */
     Principal authenticate(String pin) throws AuthenticationException;
 }
