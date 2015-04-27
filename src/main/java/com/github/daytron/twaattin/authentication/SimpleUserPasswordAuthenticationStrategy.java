@@ -40,13 +40,13 @@ public class SimpleUserPasswordAuthenticationStrategy implements UserPasswordAut
      * @throws AuthenticationException 
      */
     @Override
-    public Principal authenticate(String login, String password) throws AuthenticationException {
-        if (!"admin".equals(login)) {
+    public Principal authenticate(String pin) throws AuthenticationException {
+        if (!"admin".equals(pin)) {
 
             throw new AuthenticationException("Bad login/password pair");
         }
 
-        return new User(login);
+        return new User(pin);
     }
 
 }
