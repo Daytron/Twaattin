@@ -44,8 +44,6 @@ public class TwaattinUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         setContent(new LoginScreen());
-        
-
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
